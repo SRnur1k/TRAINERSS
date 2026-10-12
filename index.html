@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title id="page-title">ROBO SCHOOL — Обучение робототехнике для детей и взрослых</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jost:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Jost', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              dark: '#141024',
+              card: '#1F1F24',
+              red: '#D52027',
+              redHover: '#B8191E',
+              grayText: '#87878E',
+              lightBg: '#FFFFFF'
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Jost', sans-serif;
+      background-color: #141024;
+      color: #FFFFFF;
+    }
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between overflow-x-hidden relative">
+
+  <!-- Header -->
+  <header class="max-w-[1200px] w-full mx-auto px-4 py-6 flex items-center justify-between bg-[#141024]">
+    <div class="text-2xl font-bold tracking-wider uppercase text-white">
+      ROBO<span class="text-brand-red">.</span>SCHOOL
+    </div>
+
+    <!-- Desktop Nav -->
+    <nav class="hidden md:flex items-center space-x-8 text-sm uppercase tracking-wider font-medium text-gray-300">
+      <a href="#about" class="nav-about hover:text-white transition-colors">О школе</a>
+      <a href="#trainers" class="nav-trainers hover:text-white transition-colors">Тренеры</a>
+      <a href="#pricing" class="nav-pricing hover:text-white transition-colors">Стоимость</a>
+      <a href="#contacts" class="nav-contacts hover:text-white transition-colors">Контакты</a>
+    </nav>
+
+    <div class="hidden md:flex items-center space-x-6">
+      <!-- Кнопка смены языка -->
+      <button id="lang-btn" onclick="toggleLanguage()" class="px-3 py-1 rounded-md border border-neutral-700 text-xs font-semibold tracking-wider text-gray-300 hover:text-white hover:border-brand-red transition-all duration-300 transform hover:scale-105 active:scale-95">
+        RU
+      </button>
+      <a href="tel:+78000001122" class="text-lg font-semibold hover:text-brand-red transition-colors">+7 800 000 11 22</a>
+    </div>
+
+    <!-- Mobile Burger Button -->
+    <button id="burger-btn" class="md:hidden text-white focus:outline-none transition-transform active:scale-95" aria-label="Открыть меню">
+      <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </button>
+  </header>
+
+  <!-- Mobile Navigation Overlay -->
+  <div id="mobile-menu" class="fixed inset-0 bg-brand-dark bg-opacity-98 z-50 transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col justify-between p-8 md:hidden">
+    <div class="flex justify-between items-center">
+      <div class="text-2xl font-bold tracking-wider uppercase">ROBO<span class="text-brand-red">.</span>SCHOOL</div>
+      <button id="close-menu" class="text-white focus:outline-none transition-transform active:scale-95" aria-label="Закрыть меню">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+        </svg>
+      </button>
+    </div>
+    <nav class="flex flex-col space-y-6 text-xl uppercase font-semibold text-center my-auto">
+      <a href="#about" class="mobile-nav-link nav-about hover:text-brand-red transition-colors">О школе</a>
+      <a href="#trainers" class="mobile-nav-link nav-trainers hover:text-brand-red transition-colors">Тренеры</a>
+      <a href="#pricing" class="mobile-nav-link nav-pricing hover:text-brand-red transition-colors">Стоимость</a>
+      <a href="#contacts" class="mobile-nav-link nav-contacts hover:text-brand-red transition-colors">Контакты</a>
+      <div class="pt-4">
+        <button onclick="toggleLanguage(); closeMobileMenu();" class="px-6 py-2 rounded-md border border-neutral-700 text-sm font-semibold text-white hover:border-brand-red transition-all">
+          Язык / Language: <span id="mobile-lang-text">RU</span>
+        </button>
+      </div>
+    </nav>
+    <div class="text-center">
+      <a href="tel:+78000001122" class="text-xl font-bold text-brand-red">+7 800 000 11 22</a>
+    </div>
+  </div>
+
+  <!-- Hero Section -->
+  <section class="max-w-[1200px] w-full mx-auto px-4 pt-8 md:pt-12 grid md:grid-cols-2 items-end gap-8 relative bg-[#141024]">
+    <div class="space-y-6 pb-12 md:pb-16">
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold leading-tight uppercase">
+        ROBO SCHOOL
+      </h1>
+      <p class="hero-desc text-gray-300 text-lg leading-relaxed max-w-md">
+        Курсы повышения квалификации по робототехнике для педагогов начальной школы
+      </p>
+      <div class="pt-4">
+        <a href="#lead-form" class="hero-btn inline-block bg-brand-red hover:bg-brand-redHover text-white text-center font-semibold px-8 py-4 rounded-md transition-all duration-300 transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-red-600/40">
+          Записаться на курс
+        </a>
+      </div>
+    </div>
+    <div class="flex justify-center md:justify-end items-end h-full">
+      <div class="w-full max-w-[480px] relative flex items-end">
+        <img 
+          src="Group 211.png" 
+          alt="ROBO SCHOOL Ученица" 
+          class="w-full h-auto object-contain block align-bottom"
+        />
+      </div>
+    </div>
+  </section>
+
+  <!-- Metrics Section -->
+  <section id="about" class="bg-white text-black py-16 md:py-20 relative z-10">
+    <div class="max-w-[1200px] mx-auto px-4">
+      <p class="about-text text-center text-lg md:text-2xl font-normal mb-14 max-w-3xl mx-auto leading-relaxed text-black">
+        Robo School — учреждение для формирования кадрового педагогического резерва в сфере робототехники и программирования
+      </p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+        <div>
+          <div class="text-4xl md:text-6xl font-bold text-brand-red">10</div>
+          <p class="metric-1 text-gray-700 font-medium text-xs md:text-sm mt-3">УМК по различным направлениям по робототехнике</p>
+        </div>
+        <div>
+          <div class="text-4xl md:text-6xl font-bold text-brand-red">20</div>
+          <p class="metric-2 text-gray-700 font-medium text-xs md:text-sm mt-3">Школ, в которых запущена робототехника</p>
+        </div>
+        <div>
+          <div class="text-4xl md:text-6xl font-bold text-brand-red">100</div>
+          <p class="metric-3 text-gray-700 font-medium text-xs md:text-sm mt-3">Педагогов, прошедших курсы повышения квалификации</p>
+        </div>
+        <div>
+          <div class="text-4xl md:text-6xl font-bold text-brand-red">10 000</div>
+          <p class="metric-4 text-gray-700 font-medium text-xs md:text-sm mt-3">Обученных детей на базе собственных центров</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What You Get Section -->
+  <section class="bg-[#F9F9F9] text-black py-16 md:py-24">
+    <div class="max-w-[1200px] mx-auto px-4">
+      <h2 class="section-benefits text-3xl md:text-4xl font-bold uppercase mb-12 text-black">Что вы получите после курса</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        <div class="bg-white p-8 rounded-xl border border-gray-200 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md space-y-4">
+          <h3 class="benefit-1-title text-xl font-bold text-black">Удостоверение</h3>
+          <p class="benefit-1-desc text-gray-600 text-sm leading-relaxed">
+            Дающее право преподавать робототехнику для детей 6-12 лет в образовательных учреждениях
+          </p>
+        </div>
+        <div class="bg-white p-8 rounded-xl border border-gray-200 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md space-y-4">
+          <h3 class="benefit-2-title text-xl font-bold text-black">Знания</h3>
+          <p class="benefit-2-desc text-gray-600 text-sm leading-relaxed">
+            По основам разработки учебно-методических комплексов по робототехнике и программированию
+          </p>
+        </div>
+        <div class="bg-white p-8 rounded-xl border border-gray-200 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md space-y-4 relative">
+          <div class="flex items-center justify-between">
+            <h3 class="benefit-3-title text-xl font-bold text-black">Практику</h3>
+            <span class="benefit-badge text-[10px] bg-gray-100 text-gray-600 px-2 py-1 rounded border border-gray-200">При наличии свободных мест</span>
+          </div>
+          <p class="benefit-3-desc text-gray-600 text-sm leading-relaxed">
+            Возможность пройти практику по преподаванию робототехники на базе R:ED LAB (в оффлайн или онлайн формате)
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trainers Section -->
+  <section id="trainers" class="bg-white text-black py-12 md:py-20">
+    <div class="max-w-[1200px] mx-auto px-4">
+      <div class="flex justify-between items-center mb-10">
+        <h2 class="section-trainers text-3xl md:text-4xl font-bold uppercase text-black">Профессиональные тренеры</h2>
+        
+        <!-- Carousel Arrows -->
+        <div class="flex items-center space-x-3">
+          <button id="slide-left" class="w-10 h-10 rounded-full bg-[#F9F9F9] border border-gray-200 flex items-center justify-center text-black hover:bg-brand-red hover:text-white transition-all duration-300 transform active:scale-95 shadow-sm" aria-label="Назад">
+            &#8592;
+          </button>
+          <button id="slide-right" class="w-10 h-10 rounded-full bg-[#F9F9F9] border border-gray-200 flex items-center justify-center text-black hover:bg-brand-red hover:text-white transition-all duration-300 transform active:scale-95 shadow-sm" aria-label="Вперед">
+            &#8594;
+          </button>
+        </div>
+      </div>
+
+      <!-- Trainers Slider Container -->
+      <div id="trainers-scroll" class="flex space-x-6 overflow-x-auto no-scrollbar scroll-smooth py-2">
+        
+        <!-- Trainer 1 -->
+        <div class="min-w-[260px] md:min-w-[280px] bg-[#F9F9F9] rounded-xl overflow-hidden border border-gray-200 flex flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
+          <div class="aspect-[4/5] overflow-hidden bg-neutral-100">
+            <img src="unsplash_Zz5LQe-VSMY.jpg" alt="Ирина Лайм" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+          </div>
+          <div class="p-6 space-y-2">
+            <h3 class="text-xl font-bold text-black">Ирина Лайм</h3>
+            <p class="trainer-role-1 text-gray-500 text-sm">Преподаватель по робототехнике</p>
+            <button onclick="openModal('irina')" class="btn-more text-brand-red font-medium text-sm pt-2 hover:underline inline-block transition-transform active:scale-95">
+              Подробнее &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Trainer 2 -->
+        <div class="min-w-[260px] md:min-w-[280px] bg-[#F9F9F9] rounded-xl overflow-hidden border border-gray-200 flex flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
+          <div class="aspect-[4/5] overflow-hidden bg-neutral-100">
+            <img src="unsplash_IF9TK5Uy-KI (1).jpg" alt="Марина Орлова" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+          </div>
+          <div class="p-6 space-y-2">
+            <h3 class="text-xl font-bold text-black">Марина Орлова</h3>
+            <p class="trainer-role-1 text-gray-500 text-sm">Преподаватель по робототехнике</p>
+            <button onclick="openModal('marina')" class="btn-more text-brand-red font-medium text-sm pt-2 hover:underline inline-block transition-transform active:scale-95">
+              Подробнее &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Trainer 3 -->
+        <div class="min-w-[260px] md:min-w-[280px] bg-[#F9F9F9] rounded-xl overflow-hidden border border-gray-200 flex flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
+          <div class="aspect-[4/5] overflow-hidden bg-neutral-100">
+            <img src="unsplash_OhKElOkQ3RE.jpg" alt="Максим Петров" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+          </div>
+          <div class="p-6 space-y-2">
+            <h3 class="text-xl font-bold text-black">Максим Петров</h3>
+            <p class="trainer-role-2 text-gray-500 text-sm">Преподаватель по программированию</p>
+            <button onclick="openModal('maksim')" class="btn-more text-brand-red font-medium text-sm pt-2 hover:underline inline-block transition-transform active:scale-95">
+              Подробнее &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Trainer 4 -->
+        <div class="min-w-[260px] md:min-w-[280px] bg-[#F9F9F9] rounded-xl overflow-hidden border border-gray-200 flex flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
+          <div class="aspect-[4/5] overflow-hidden bg-neutral-100">
+            <img src="unsplash_rriAI0nhcbc.jpg" alt="Константин Назаров" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+          </div>
+          <div class="p-6 space-y-2">
+            <h3 class="text-xl font-bold text-black">Константин Назаров</h3>
+            <p class="trainer-role-1 text-gray-500 text-sm">Преподаватель по робототехнике</p>
+            <button onclick="openModal('konstantin')" class="btn-more text-brand-red font-medium text-sm pt-2 hover:underline inline-block transition-transform active:scale-95">
+              Подробнее &rarr;
+            </button>
+          </div>
+        </div>
+
+        <!-- Trainer 5 -->
+        <div class="min-w-[260px] md:min-w-[280px] bg-[#F9F9F9] rounded-xl overflow-hidden border border-gray-200 flex flex-col justify-between transition-all duration-300 hover:-translate-y-2 hover:shadow-lg">
+          <div class="aspect-[4/5] overflow-hidden bg-neutral-100">
+            <img src="unsplash_Z_bTArFy6ks.jpg" alt="Лиза Весенняя" class="w-full h-full object-cover transition-transform duration-500 hover:scale-105">
+          </div>
+          <div class="p-6 space-y-2">
+            <h3 class="text-xl font-bold text-black">Лиза Весенняя</h3>
+            <p class="trainer-role-3 text-gray-500 text-sm">преподаватель по программированию</p>
+            <button onclick="openModal('liza')" class="btn-more text-brand-red font-medium text-sm pt-2 hover:underline inline-block transition-transform active:scale-95">
+              Подробнее &rarr;
+            </button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section id="pricing" class="bg-white text-black py-16 md:py-24 border-t border-gray-100">
+    <div class="max-w-[1200px] mx-auto px-4">
+      <h2 class="section-pricing text-3xl md:text-4xl font-bold uppercase mb-12 text-black">Выберите нужный пакет</h2>
+      <div class="grid md:grid-cols-3 gap-8">
+        
+        <!-- Package 1 (Dark Active) -->
+        <div class="bg-[#141024] text-white p-8 rounded-xl border border-neutral-800 flex flex-col justify-between space-y-6 shadow-xl transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
+          <div class="space-y-4">
+            <div class="text-sm uppercase tracking-widest text-brand-grayText font-semibold">— PRO —</div>
+            <div class="text-3xl font-bold text-white">20 000 ₽</div>
+            <p class="package-1-desc text-brand-grayText text-sm leading-relaxed">
+              УМК по робототехнике и программированию
+            </p>
+          </div>
+          <button onclick="scrollToLeadForm('PRO')" class="btn-apply w-full bg-brand-red hover:bg-brand-redHover text-white py-3 rounded-md font-semibold transition-all duration-300 transform hover:scale-[1.02] active:scale-95 shadow-md">
+            Оставить заявку
+          </button>
+        </div>
+
+        <!-- Package 2 (Light) -->
+        <div class="bg-[#F9F9F9] text-black p-8 rounded-xl border border-gray-200 flex flex-col justify-between space-y-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+          <div class="space-y-4">
+            <div class="text-sm uppercase tracking-widest text-gray-500 font-semibold">— ROBO —</div>
+            <div class="text-3xl font-bold text-black">15 000 ₽</div>
+            <p class="package-2-desc text-gray-600 text-sm leading-relaxed">
+              УМК по робототехнике
+            </p>
+          </div>
+          <button onclick="scrollToLeadForm('ROBO')" class="btn-apply w-full bg-brand-red hover:bg-brand-redHover text-white py-3 rounded-md font-semibold transition-all duration-300 transform hover:scale-[1.02] active:scale-95 shadow-md">
+            Оставить заявку
+          </button>
+        </div>
+
+        <!-- Package 3 (Light) -->
+        <div class="bg-[#F9F9F9] text-black p-8 rounded-xl border border-gray-200 flex flex-col justify-between space-y-6 transition-all duration-300 hover:-translate-y-2 hover:shadow-xl">
+          <div class="space-y-4">
+            <div class="text-sm uppercase tracking-widest text-gray-500 font-semibold">— PROG —</div>
+            <div class="text-3xl font-bold text-black">10 000 ₽</div>
+            <p class="package-3-desc text-gray-600 text-sm leading-relaxed">
+              УМК по программированию
+            </p>
+          </div>
+          <button onclick="scrollToLeadForm('PROG')" class="btn-apply w-full bg-brand-red hover:bg-brand-redHover text-white py-3 rounded-md font-semibold transition-all duration-300 transform hover:scale-[1.02] active:scale-95 shadow-md">
+            Оставить заявку
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Lead Form Section -->
+  <section id="lead-form" class="bg-brand-red text-white py-20 relative overflow-hidden">
+    <div class="max-w-[1200px] mx-auto px-4 grid md:grid-cols-2 gap-8 items-center relative z-10">
+      <div>
+        <h2 class="form-title text-3xl md:text-4xl font-bold uppercase leading-tight mb-4">
+          Запишитесь на курс со скидкой 10%
+        </h2>
+        <p class="form-sub text-white/90 text-sm">
+          Акция действительна до 10 марта 2022 года
+        </p>
+      </div>
+      <form onsubmit="handleFormSubmit(event)" class="space-y-4">
+        <input type="text" id="user-name" placeholder="Имя" required class="input-name w-full px-4 py-3 rounded-md bg-white text-black focus:outline-none focus:ring-2 focus:ring-black placeholder-gray-400 transition-all">
+        <input type="tel" id="user-phone" placeholder="Телефон" required class="input-phone w-full px-4 py-3 rounded-md bg-white text-black focus:outline-none focus:ring-2 focus:ring-black placeholder-gray-400 transition-all">
+        <input type="email" id="user-email" placeholder="E-mail" required class="input-email w-full px-4 py-3 rounded-md bg-white text-black focus:outline-none focus:ring-2 focus:ring-black placeholder-gray-400 transition-all">
+        <button type="submit" class="btn-submit w-full bg-[#141024] hover:bg-black text-white font-semibold py-3 rounded-md transition-all duration-300 transform hover:scale-[1.01] active:scale-95 shadow-lg">
+          Оформить заявку
+        </button>
+      </form>
+    </div>
+    
+    <!-- Background Percent Signs -->
+    <div class="absolute bottom-0 left-0 right-0 pointer-events-none select-none opacity-20 flex justify-between items-end overflow-hidden px-4 text-white text-7xl md:text-9xl font-bold tracking-widest whitespace-nowrap">
+      <span>% % % % % % % % % % % % % % % %</span>
+    </div>
+  </section>
+
+  <!-- Footer / Contacts -->
+  <footer id="contacts" class="max-w-[1200px] w-full mx-auto px-4 py-8 flex flex-col md:flex-row items-center justify-between gap-4 border-t border-neutral-800 text-sm text-brand-grayText bg-[#141024]">
+    <div>
+      <div class="text-xl font-bold uppercase text-white mb-1">ROBO<span class="text-brand-red">.</span>SCHOOL</div>
+      <p class="footer-copy">© ROBO.SCHOOL, 2026. Все права защищены.</p>
+    </div>
+    <div>
+      <a href="tel:+78000001122" class="text-lg font-semibold text-white hover:text-brand-red transition-colors">+7 800 000 11 22</a>
+    </div>
+  </footer>
+
+  <!-- Кнопка «Наверх» с эффектом -->
+  <button id="scrollToTopBtn" onclick="scrollToTop()" class="fixed bottom-6 right-6 z-40 bg-brand-red text-white w-12 h-12 rounded-full shadow-lg flex items-center justify-center opacity-0 translate-y-4 pointer-events-none transition-all duration-300 hover:scale-110 hover:bg-brand-redHover active:scale-95" aria-label="Наверх">
+    <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M5 15l7-7 7 7"/>
+    </svg>
+  </button>
+
+  <!-- Modal Component for Trainers -->
+  <div id="trainer-modal" class="fixed inset-0 bg-black bg-opacity-70 z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-white text-black rounded-2xl max-w-xl w-full p-6 md:p-8 relative space-y-6 shadow-2xl overflow-y-auto max-h-[90vh]">
+      <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-black text-2xl font-bold transition-transform active:scale-95">&times;</button>
+      
+      <div class="flex items-start space-x-4 border-b border-gray-100 pb-6">
+        <img id="modal-img" src="" alt="" class="w-24 h-24 object-cover rounded-xl flex-shrink-0">
+        <div class="space-y-1">
+          <h3 id="modal-name" class="text-2xl font-bold text-black"></h3>
+          <p id="modal-role" class="text-gray-500 text-sm"></p>
+          <div class="flex space-x-2 pt-2">
+            <span class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600">fb</span>
+            <span class="w-6 h-6 rounded-full bg-gray-100 flex items-center justify-center text-xs font-bold text-gray-600">in</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tabs Navigation -->
+      <div class="flex border-b border-gray-200 text-sm font-medium text-gray-500 space-x-6">
+        <button class="tab-edu text-brand-red border-b-2 border-brand-red pb-2 font-semibold">Образование</button>
+        <button class="tab-exp hover:text-black pb-2 transition-colors">Опыт работы</button>
+        <button class="tab-awards hover:text-black pb-2 transition-colors">Награды</button>
+      </div>
+
+      <!-- Tab Content -->
+      <div class="space-y-4 text-xs md:text-sm text-gray-600 leading-relaxed">
+        <div>
+          <p class="font-semibold text-black mb-1">Сентябрь 1995 — Июнь 2000</p>
+          <p>Санкт-Петербургский политехнический университет Петра Великого</p>
+          <p class="text-gray-400">Факультет: Компьютерных наук и технологий</p>
+          <p class="text-gray-400">Специальность: Математика и компьютерные науки</p>
+          <p class="text-gray-400">Форма обучения: Очная</p>
+        </div>
+
+        <div class="pt-2">
+          <h4 class="modal-courses font-bold text-black text-sm md:text-base mb-1">Курсы и тренинги</h4>
+          <p class="font-semibold text-black">Ноябрь 2020 — Февраль 2021</p>
+          <p>Программа дополнительного образования «3D Моделирование»</p>
+          <p class="text-gray-400">Место проведения: Институт дополнительного образования «Политех»</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Словарь переводов
+    const translations = {
+      RU: {
+        navAbout: "О школе",
+        navTrainers: "Тренеры",
+        navPricing: "Стоимость",
+        navContacts: "Контакты",
+        heroDesc: "Курсы повышения квалификации по робототехнике для педагогов начальной школы",
+        heroBtn: "Записаться на курс",
+        aboutText: "Robo School — учреждение для формирования кадрового педагогического резерва в сфере робототехники и программирования",
+        metric1: "УМК по различным направлениям по робототехнике",
+        metric2: "Школ, в которых запущена робототехника",
+        metric3: "Педагогов, прошедших курсы повышения квалификации",
+        metric4: "Обученных детей на базе собственных центров",
+        sectionBenefits: "Что вы получите после курса",
+        benefit1Title: "Удостоверение",
+        benefit1Desc: "Дающее право преподавать робототехнику для детей 6-12 лет в образовательных учреждениях",
+        benefit2Title: "Знания",
+        benefit2Desc: "По основам разработки учебно-методических комплексов по робототехнике и программированию",
+        benefit3Title: "Практику",
+        benefit3Desc: "Возможность пройти практику по преподаванию робототехники на базе R:ED LAB (в оффлайн или онлайн формате)",
+        benefitBadge: "При наличии свободных мест",
+        sectionTrainers: "Профессиональные тренеры",
+        trainerRole1: "Преподаватель по робототехнике",
+        trainerRole2: "Преподаватель по программированию",
+        trainerRole3: "Преподаватель по 3D-моделированию",
+        btnMore: "Подробнее →",
+        sectionPricing: "Выберите нужный пакет",
+        package1Desc: "УМК по робототехнике и программированию",
+        package2Desc: "УМК по робототехнике",
+        package3Desc: "УМК по программированию",
+        btnApply: "Оставить заявку",
+        formTitle: "Запишитесь на курс со скидкой 10%",
+        formSub: "Акция действительна до 10 марта 2022 года",
+        inputName: "Имя",
+        inputPhone: "Телефон",
+        inputEmail: "E-mail",
+        btnSubmit: "Оформить заявку",
+        footerCopy: "© ROBO.SCHOOL, 2026. Все права защищены.",
+        tabEdu: "Образование",
+        tabExp: "Опыт работы",
+        tabAwards: "Награды",
+        modalCourses: "Курсы и тренинги"
+      },
+      EN: {
+        navAbout: "About",
+        navTrainers: "Trainers",
+        navPricing: "Pricing",
+        navContacts: "Contacts",
+        heroDesc: "Advanced robotics training courses for primary school teachers",
+        heroBtn: "Enroll in course",
+        aboutText: "Robo School is an institution for forming a personnel pedagogical reserve in robotics and programming",
+        metric1: "Robotics curriculum kits in various areas",
+        metric2: "Schools with active robotics programs",
+        metric3: "Teachers who completed advanced training",
+        metric4: "Trained children across our centers",
+        sectionBenefits: "What you will get after the course",
+        benefit1Title: "Certificate",
+        benefit1Desc: "Giving the right to teach robotics to children aged 6-12 in educational institutions",
+        benefit2Title: "Knowledge",
+        benefit2Desc: "On the basics of developing curriculum kits for robotics and programming",
+        benefit3Title: "Practice",
+        benefit3Desc: "Opportunity to practice teaching robotics at R:ED LAB (offline or online format)",
+        benefitBadge: "Subject to availability",
+        sectionTrainers: "Professional trainers",
+        trainerRole1: "Robotics Instructor",
+        trainerRole2: "Programming Instructor",
+        trainerRole3: "3D Modeling Instructor",
+        btnMore: "Read more →",
+        sectionPricing: "Choose the desired package",
+        package1Desc: "Curriculum kit for robotics & programming",
+        package2Desc: "Curriculum kit for robotics",
+        package3Desc: "Curriculum kit for programming",
+        btnApply: "Apply now",
+        formTitle: "Sign up for the course with a 10% discount",
+        formSub: "Promotion valid until March 10, 2022",
+        inputName: "Name",
+        inputPhone: "Phone",
+        inputEmail: "E-mail",
+        btnSubmit: "Submit application",
+        footerCopy: "© ROBO.SCHOOL, 2026. All rights reserved.",
+        tabEdu: "Education",
+        tabExp: "Experience",
+        tabAwards: "Awards",
+        modalCourses: "Courses & Training"
+      }
+    };
+
+    let currentLang = 'RU';
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'RU' ? 'EN' : 'RU';
+      document.getElementById('lang-btn').innerText = currentLang;
+      document.getElementById('mobile-lang-text').innerText = currentLang;
+      
+      const t = translations[currentLang];
+
+      // Применяем переводы к элементам
+      document.querySelectorAll('.nav-about').forEach(el => el.innerText = t.navAbout);
+      document.querySelectorAll('.nav-trainers').forEach(el => el.innerText = t.navTrainers);
+      document.querySelectorAll('.nav-pricing').forEach(el => el.innerText = t.navPricing);
+      document.querySelectorAll('.nav-contacts').forEach(el => el.innerText = t.navContacts);
+      
+      document.querySelector('.hero-desc').innerText = t.heroDesc;
+      document.querySelector('.hero-btn').innerText = t.heroBtn;
+      document.querySelector('.about-text').innerText = t.aboutText;
+      
+      document.querySelector('.metric-1').innerText = t.metric1;
+      document.querySelector('.metric-2').innerText = t.metric2;
+      document.querySelector('.metric-3').innerText = t.metric3;
+      document.querySelector('.metric-4').innerText = t.metric4;
+
+      document.querySelector('.section-benefits').innerText = t.sectionBenefits;
+      document.querySelector('.benefit-1-title').innerText = t.benefit1Title;
+      document.querySelector('.benefit-1-desc').innerText = t.benefit1Desc;
+      document.querySelector('.benefit-2-title').innerText = t.benefit2Title;
+      document.querySelector('.benefit-2-desc').innerText = t.benefit2Desc;
+      document.querySelector('.benefit-3-title').innerText = t.benefit3Title;
+      document.querySelector('.benefit-3-desc').innerText = t.benefit3Desc;
+      document.querySelector('.benefit-badge').innerText = t.benefitBadge;
+
+      document.querySelector('.section-trainers').innerText = t.sectionTrainers;
+      document.querySelectorAll('.trainer-role-1').forEach(el => el.innerText = t.trainerRole1);
+      document.querySelector('.trainer-role-2').innerText = t.trainerRole2;
+      document.querySelector('.trainer-role-3').innerText = t.trainerRole3;
+      document.querySelectorAll('.btn-more').forEach(el => el.innerText = t.btnMore);
+
+      document.querySelector('.section-pricing').innerText = t.sectionPricing;
+      document.querySelector('.package-1-desc').innerText = t.package1Desc;
+      document.querySelector('.package-2-desc').innerText = t.package2Desc;
+      document.querySelector('.package-3-desc').innerText = t.package3Desc;
+      document.querySelectorAll('.btn-apply').forEach(el => el.innerText = t.btnApply);
+
+      document.querySelector('.form-title').innerText = t.formTitle;
+      document.querySelector('.form-sub').innerText = t.formSub;
+      document.getElementById('user-name').placeholder = t.inputName;
+      document.getElementById('user-phone').placeholder = t.inputPhone;
+      document.getElementById('user-email').placeholder = t.inputEmail;
+      document.querySelector('.btn-submit').innerText = t.btnSubmit;
+
+      document.querySelector('.footer-copy').innerText = t.footerCopy;
+      document.querySelector('.tab-edu').innerText = t.tabEdu;
+      document.querySelector('.tab-exp').innerText = t.tabExp;
+      document.querySelector('.tab-awards').innerText = t.tabAwards;
+      document.querySelector('.modal-courses').innerText = t.modalCourses;
+    }
+
+    // Mobile Nav Logic
+    const burgerBtn = document.getElementById('burger-btn');
+    const closeBtn = document.getElementById('close-menu');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const navLinks = document.querySelectorAll('.mobile-nav-link');
+
+    burgerBtn.addEventListener('click', () => {
+      mobileMenu.classList.remove('translate-x-full');
+    });
+
+    closeBtn.addEventListener('click', () => {
+      mobileMenu.classList.add('translate-x-full');
+    });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.add('translate-x-full');
+      });
+    });
+
+    function closeMobileMenu() {
+      mobileMenu.classList.add('translate-x-full');
+    }
+
+    // Slider Carousel Logic
+    const scrollContainer = document.getElementById('trainers-scroll');
+    document.getElementById('slide-left').addEventListener('click', () => {
+      scrollContainer.scrollBy({ left: -300, behavior: 'smooth' });
+    });
+    document.getElementById('slide-right').addEventListener('click', () => {
+      scrollContainer.scrollBy({ left: 300, behavior: 'smooth' });
+    });
+
+    // Scroll to Top Logic
+    const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 400) {
+        scrollToTopBtn.classList.remove('opacity-0', 'translate-y-4', 'pointer-events-none');
+        scrollToTopBtn.classList.add('opacity-100', 'translate-y-0');
+      } else {
+        scrollToTopBtn.classList.add('opacity-0', 'translate-y-4', 'pointer-events-none');
+        scrollToTopBtn.classList.remove('opacity-100', 'translate-y-0');
+      }
+    });
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // Trainer Modal Data
+    const trainerData = {
+      irina: {
+        name: 'Ирина Лайм',
+        role: 'Преподаватель по робототехнике',
+        img: 'unsplash_Zz5LQe-VSMY.jpg'
+      },
+      marina: {
+        name: 'Марина Орлова',
+        role: 'Преподаватель по робототехнике',
+        img: 'unsplash_IF9TK5Uy-KI (1).jpg'
+      },
+      maksim: {
+        name: 'Максим Петров',
+        role: 'Преподаватель по программированию',
+        img: 'unsplash_OhKElOkQ3RE.jpg'
+      },
+      konstantin: {
+        name: 'Константин Назаров',
+        role: 'Преподаватель по робототехнике',
+        img: 'unsplash_rriAI0nhcbc.jpg'
+      },
+      liza: {
+        name: 'Лиза Весенняя',
+        role: 'преподаватель по программированию',
+        img: 'unsplash_Z_bTArFy6ks.jpg'
+      }
+    };
+
+    function openModal(id) {
+      const data = trainerData[id];
+      if (!data) return;
+      document.getElementById('modal-img').src = data.img;
+      document.getElementById('modal-name').innerText = data.name;
+      document.getElementById('modal-role').innerText = data.role;
+      document.getElementById('trainer-modal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('trainer-modal').classList.add('hidden');
+    }
+
+    function scrollToLeadForm(packageName) {
+      document.getElementById('lead-form').scrollIntoView({ behavior: 'smooth' });
+    }
+
+    function handleFormSubmit(event) {
+      event.preventDefault();
+      const name = document.getElementById('user-name').value;
+      alert(currentLang === 'RU' ? `Спасибо, ${name}! Ваша заявка успешно отправлена.` : `Thank you, ${name}! Your application has been successfully submitted.`);
+      event.target.reset();
+    }
+  </script>
+</body>
+</html>
